@@ -29,3 +29,19 @@ You are done when `npm test` passes (29 tests), `npm run check` shows no errors,
 and you can book a seat and create an event in the browser.
 
 `db.json` changes when you book (json-server saves to it). `git checkout db.json` resets it.
+
+How to run it?
+# Lab Equipment Lending System (M1 Prototype)
+
+A single-page Vue 3 application for managing lab equipment and tracking loans, built with Vue Router, Pinia, and Tailwind CSS.
+
+## Getting Started
+
+Make sure you have Node.js installed, then run the application using two separate terminal windows:
+
+### 1. Start the Mock API Server (Terminal 1) 
+```bash
+npm run api
+
+### 1. Start the Frontend Development Server (Terminal 2)
+npm run dev

@@ -1,32 +1,19 @@
 import { createRouter, createWebHistory, type RouterHistory } from "vue-router";
 import { getActivePinia } from "pinia";
-import { useSessionStore } from "../stores/session";
-import EventsPage from "../pages/EventsPage.vue";
-
-declare module "vue-router" {
-  interface RouteMeta {
-    organiserOnly?: boolean;
-  }
-}
+import EquipmentCatalogPage from "../pages/EquipmentCatalogPage.vue";
 
 export const routes = [
-  { path: "/", name: "events", component: EventsPage },
+  { path: "/", name: "catalog", component: EquipmentCatalogPage },
   {
-    path: "/events/new",
-    name: "event-new",
-    component: () => import("../pages/NewEventPage.vue"),
-    meta: { organiserOnly: true },
-  },
-  {
-    path: "/events/:id(\\d+)",
-    name: "event-detail",
-    component: () => import("../pages/EventDetailPage.vue"),
+    path: "/equipment/:id(\\d+)",
+    name: "equipment-detail",
+    component: () => import("../pages/EquipmentDetailPage.vue"),
     props: true,
   },
   {
-    path: "/my-bookings",
-    name: "my-bookings",
-    component: () => import("../pages/MyBookingsPage.vue"),
+    path: "/my-loans",
+    name: "my-loans",
+    component: () => import("../pages/MyLoansPage.vue"),
   },
   {
     path: "/:pathMatch(.*)*",
@@ -38,12 +25,8 @@ export const routes = [
 export function makeRouter(history: RouterHistory = createWebHistory()) {
   const router = createRouter({ history, routes });
 
-  router.beforeEach((to) => {
+  router.beforeEach(() => {
     if (!getActivePinia()) return;
-    const session = useSessionStore();
-    if (to.meta.organiserOnly && !session.isOrganiser) {
-      return { name: "events", query: { denied: "1" } };
-    }
   });
 
   return router;

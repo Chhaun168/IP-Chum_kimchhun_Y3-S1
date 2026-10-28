@@ -1,29 +1,28 @@
-export type Category = "talk" | "workshop" | "social" | "sport";
+export type EquipmentCategory = "Measurement" | "Power" | "Tools" | "General";
 
-export interface CampusEvent {
+export interface Equipment {
   id: number;
-  title: string;
-  category: Category;
-  startsAt: string; // ISO date, e.g. "2026-11-02T09:00:00Z"
-  location: string;
-  capacity: number;
-  booked: number;   // seats already taken
+  name: string;
+  model: string;
+  category: EquipmentCategory;
+  totalStock: number;
+  availableStock: number;
   description: string;
 }
 
-// What the "new event" form sends: the server gives the id, nobody has booked yet
-export type EventInput = Omit<CampusEvent, "id" | "booked">;
+export type EquipmentInput = Omit<Equipment, "id" | "availableStock">;
 
-export interface Booking {
+export interface Loan {
   id: number;
-  eventId: number;
-  name: string;
-  email: string;
-  seats: number;
-  createdAt: string;
+  equipmentId: number;
+  borrowerName: string;
+  borrowerEmail: string;
+  quantity: number;
+  loanDate: string;
+  status: "Active" | "Returned";
 }
 
-export type BookingInput = Pick<Booking, "name" | "email" | "seats">;
+export type LoanInput = Pick<Loan, "borrowerName" | "borrowerEmail" | "quantity">;
 
 // Field name -> error message, only for fields that have an error
 export type FormErrors<T> = Partial<Record<keyof T, string>>;
